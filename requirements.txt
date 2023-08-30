@@ -1,4 +1,10 @@
-pydantic-settings
-Django
-Authlib
+fastapi
 requests
+pandas
+uvicorn
+
+# New
+pyjwt[crypto]
+itsdangerous
+httpx
+authlib

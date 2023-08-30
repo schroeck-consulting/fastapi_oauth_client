@@ -18,9 +18,9 @@ requirements = open("requirements.txt").read().split("\n")
 
 
 setup(
-    name="mvv.auth.django",
+    name="mvv.auth.fastapi",
     version=version,
-    description="Sample Library",
+    description="FastAPI Authorization Framework",
     long_description=io.open("README.md", encoding="utf8").read()+ "\n",
     #+ io.open(os.path.join("docs", "source", "HISTORY.rst"), encoding="utf8").read(),
     # Get more strings from
