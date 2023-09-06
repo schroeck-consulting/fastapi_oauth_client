@@ -2,16 +2,16 @@ test:
 	pytest --workers auto tests --no-coverage-upload
 
 test-with-typeguard:
-	pytest --workers auto --typeguard-packages=eon.bonusengine.base tests --no-coverage-upload
+	pytest --workers auto --typeguard-packages=mvv.auth.fastapi tests --no-coverage-upload
 
 coverage:
-	pytest --workers auto --cov-config=.coveragerc --cov=eon.bonusengine.base --cov-report=term-missing --cov-report=xml --junitxml=junit/test-results.xml tests
+	pytest --workers auto --cov-config=.coveragerc --cov=mvv.auth.fastapi --cov-report=term-missing --cov-report=xml --junitxml=junit/test-results.xml tests
 
 mypy: FORCE
-	mypy -p eon.bonusengine.base --exclude "snowflake|csv_to_pandera_schema|progressbar|pandas"
+	mypy -p mvv.auth.fastapi --exclude "snowflake|csv_to_pandera_schema|progressbar|pandas"
 
 bandit:
-	bandit -r eon -r -c .bandit
+	bandit -r mvv.auth.fastapi -r -c .bandit
 
 flake8:
 	flake8 --config .flake8 mvv

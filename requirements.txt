@@ -8,3 +8,5 @@ pyjwt[crypto]
 itsdangerous
 httpx
 authlib
+
+mvv.auth.common

@@ -16,8 +16,8 @@ from fastapi import APIRouter
 from fastapi import Request, HTTPException, Depends
 from fastapi.security import HTTPBearer
 
-from .settings import OAuthSettings
-from .token_verification import VerifyToken
+from mvv.auth.common.settings import OAuthSettings
+from mvv.auth.common import VerifyToken
 
 logger = logging.getLogger(__name__)
 
