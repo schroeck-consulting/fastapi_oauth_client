@@ -38,11 +38,17 @@ oauth.register(
 
 token_auth_scheme = HTTPBearer()
 
+
 class verify_token:
+    """
+    Class for auth decorator
+    """
     def __init__(self, roles: list = None):
         self.roles = roles
 
-    def __call__(self, token: fastapi.security.http.HTTPAuthorizationCredentials = Depends(token_auth_scheme)):
+    def __call__(self,
+                 token: fastapi.security.http.HTTPAuthorizationCredentials = Depends(
+                     token_auth_scheme)):
         """
 
         :param token:
@@ -50,8 +56,9 @@ class verify_token:
         """
         logger.debug("Attempting authorisation")
         profile = VerifyToken(token=token.credentials).verify(roles=self.roles)
-        if not type(profile) is dict:
-            raise HTTPException(401, {"status": "error", "message": "Unexpected response from Token verification"})
+        if not isinstance(profile, dict):
+            raise HTTPException(401, {"status": "error",
+                "message": "Unexpected response from Token verification"})
         if "status" in profile.keys() and profile.get("status") == "error":
             raise HTTPException(401, profile)
 
@@ -68,6 +75,7 @@ async def login(request: Request):
     logger.debug("Redirecting to IdP")
     redirect_uri = request.url_for('callback')
     return await oauth.keycloak.authorize_redirect(request, redirect_uri)
+
 
 @auth_router.get("/callback")
 async def callback(request: Request):
@@ -89,12 +97,12 @@ async def callback(request: Request):
 
     # Missing expiry
     if not 'expires_at' in token.keys():
-        logger.warning("Received access token from IdP that does NOT contain expires_at claim!")
+        logger.warning(
+            "Received access token from IdP that does NOT contain expires_at claim!")
         raise HTTPException(
-            401, detail="Received invalid response from Identity provider during login"
+            401,
+            detail="Received invalid response from Identity provider during login"
         )
 
     expiry = datetime.fromtimestamp(token.get('expires_at'))
     return {"status": "success", "token": access_token, "expires": expiry}
-
-
