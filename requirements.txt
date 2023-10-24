@@ -8,3 +8,4 @@ pyjwt[crypto]
 itsdangerous
 httpx
 authlib
+jinja2
