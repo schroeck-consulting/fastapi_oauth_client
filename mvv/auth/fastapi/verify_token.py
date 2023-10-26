@@ -118,7 +118,8 @@ class VerifyToken:
             return {"status": "error", "message": str(exception)}
 
         # Verify roles
-        permitted = self.verify_roles(roles=roles, user_roles=payload["roles"])
+        user_roles = payload.get("roles", [])
+        permitted = self.verify_roles(roles=roles, user_roles=user_roles)
 
         if not permitted:
             logger.error(f"User '{payload.get('preferred_username')}' tried "
