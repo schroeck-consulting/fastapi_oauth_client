@@ -41,10 +41,40 @@ template = """
             </div>
         </div>
         <p style="text-align: center;">It expires at {{ expires }}</p>
-        <h5 style="text-align: center;">How to use</h5>
-        <p style="text-align: center;">
-        How to use - placeholder
-        </p>
+        <h1 id="bearer-token-usage">Bearer Token Usage</h1>
+<p>This page provides you with a Bearer token that is essential for authenticating your requests against our API.</p>
+<h2 id="what-is-a-bearer-token-">What is a Bearer Token?</h2>
+<p>A Bearer token is a type of access token used to verify the identity of the user and ensure that the requester is authorized to access the requested resource. It is essentially a string that signifies a granted permission and is passed along with the request.</p>
+<h2 id="how-to-use-the-bearer-token-">How to use the Bearer Token?</h2>
+<p>When making requests to the API, include the Bearer token in the header of the HTTP request. The token should be prefixed with the word <code>Bearer</code> followed by a space.</p>
+<h3 id="example-">Example:</h3>
+<p>Suppose you are given the token:</p>
+<pre><code>YOUR_TOKEN_VALUE
+</code></pre><p>Your HTTP request should have a header like this:</p>
+<pre><code><span class="hljs-symbol">Authorization</span>: <span class="hljs-keyword">Bearer </span>YOUR_TOKEN_VALUE
+</code></pre><p>Replace <code>YOUR_TOKEN_VALUE</code> with the actual token provided by this page.</p>
+<h2 id="python-requests-example-">Python <code>requests</code> Example:</h2>
+<p>If you&#39;re using the <code>requests</code> library in Python, here&#39;s how you can make an authenticated API call with the Bearer token:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+
+url = <span class="hljs-string">'https://api.example.com/data'</span>  <span class="hljs-comment"># Replace with your API endpoint</span>
+headers = {
+    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Bearer YOUR_TOKEN_VALUE'</span>
+}
+
+response = requests.get(url, headers=headers)
+
+<span class="hljs-comment"># Handle the response as needed</span>
+<span class="hljs-built_in">print</span>(response.json())
+</code></pre>
+<p>Again, ensure you replace <code>YOUR_TOKEN_VALUE</code> with your actual token.</p>
+<h2 id="important-notes-">Important Notes:</h2>
+<ul>
+<li>Ensure that you keep your Bearer token secure and do not share it publicly.</li>
+<li>Bearer tokens have an expiration time, so you might need to refresh or request a new token after a certain period. (This token expires at {{ expires }})</li>
+<li>Always use HTTPS when making requests to the API to ensure the security of your token during transit.</li>
+</ul>
+
     </div>
 </body>
     <style>
