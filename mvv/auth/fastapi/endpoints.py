@@ -15,8 +15,8 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi import APIRouter
 from fastapi import Request, HTTPException, Depends
 from fastapi.security import HTTPBearer
-from jinja2 import Environment, BaseLoader
-from ..resources import success_template
+
+from .resources.success_template import template, token_template, explanation
 from .settings import OAuthSettings
 from .verify_token import VerifyToken
 from fastapi.responses import HTMLResponse
@@ -106,7 +106,7 @@ async def callback(request: Request):
             detail="Received invalid response from Identity provider during login"
         )
 
-    template = Environment(loader=BaseLoader()).from_string(success_template.template)
     expiry = datetime.fromtimestamp(token.get('expires_at'))
-    return HTMLResponse(template.render(token=access_token, expires=expiry))
-    #return {"status": "success", "token": access_token, "expires": expiry}
+
+    return HTMLResponse(template + token_template.format(token=token, expires=expiry) + explanation)
+

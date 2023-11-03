@@ -35,13 +35,15 @@ template = """
                         
                     }
                     </script>
-                </span>
+                </span>"""
 
-                <input type="text" id="copyTarget" class="form-control" value="{{ token }}">
+token_template= """
+                <input type="text" id="copyTarget" class="form-control" value="{token}">
             </div>
         </div>
-        <p style="text-align: center;">It expires at {{ expires }}</p>
-        <h1 id="bearer-token-usage">Bearer Token Usage</h1>
+        <p style="text-align: center;">It expires at {expires}</p>
+        <h1 id="bearer-token-usage">Bearer Token Usage</h1>"""
+explanation = """
 <p>This page provides you with a Bearer token that is essential for authenticating your requests against our API.</p>
 <h2 id="what-is-a-bearer-token-">What is a Bearer Token?</h2>
 <p>A Bearer token is a type of access token used to verify the identity of the user and ensure that the requester is authorized to access the requested resource. It is essentially a string that signifies a granted permission and is passed along with the request.</p>
@@ -89,5 +91,4 @@ response = requests.get(url, headers=headers)
         }
     </style>
 </html>
-
 """
