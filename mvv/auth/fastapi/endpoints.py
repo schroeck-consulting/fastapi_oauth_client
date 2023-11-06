@@ -108,5 +108,5 @@ async def callback(request: Request):
 
     expiry = datetime.fromtimestamp(token.get('expires_at'))
 
-    return HTMLResponse(template + token_template.format(token=token, expires=expiry) + explanation)
+    return HTMLResponse(template + token_template.format(token=access_token, expires=expiry) + explanation)
 
