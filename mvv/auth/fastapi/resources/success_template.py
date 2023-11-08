@@ -7,14 +7,14 @@ template = """
 <body>
     <div class="top-bar" style="background-color:#DCDCDC; height: 50px; width: 100%; position: fixed"></div>
     <div style="margin-top: 0px; padding: 50px;">
-        <h2 style="color:#32CD32; text-align: center;">Success!</h2>
+        <h2 id="successMessage" style="color:#32CD32; text-align: center; display: none;">Success!</h2>
         <div class="container">
             <div class="input-group">
                 <span id="copyButton" onclick="copyText()" class="input-group-addon btn" title="Click to copy">Copy
                     <i class="fa fa-clipboard" aria-hidden="true"></i>
                     <script>
                     function copyText() {
-                    
+                        /*
                         // Get the div element
                         var divElement = document.getElementById("copyTarget");
 
@@ -32,7 +32,27 @@ template = """
 
                         // Give a visual feedback to the user that the text has been copied
                         alert("Token has been copied!");
-                        
+                        */
+
+                        var copyText = document.getElementById("copyTarget");
+                        var successMessage = document.getElementById("successMessage")
+
+                        console.log('copyTarget', copyTarget)
+
+                        // Select the text field
+                        copyText.select();
+                        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+                        console.log('copyText.value', copyText.value)
+
+                        // Copy the text inside the text field
+                        navigator.clipboard.writeText(copyText.value);
+
+                        successMessage.style.display = "block";
+
+                        // Alert the copied text
+                        //alert("Copied the text: " + copyText.value);
+
                     }
                     </script>
                 </span>"""
