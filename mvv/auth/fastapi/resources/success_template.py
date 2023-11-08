@@ -43,15 +43,12 @@ template = """
                         copyText.select();
                         copyText.setSelectionRange(0, 99999); // For mobile devices
 
-                        console.log('copyText.value', copyText.value)
+                        //console.log('copyText.value', copyText.value)
 
                         // Copy the text inside the text field
                         navigator.clipboard.writeText(copyText.value);
 
-                        successMessage.style.display = "block";
-
-                        // Alert the copied text
-                        //alert("Copied the text: " + copyText.value);
+                        //successMessage.style.display = "block";
 
                     }
                     </script>
