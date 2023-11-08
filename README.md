@@ -109,9 +109,9 @@ This package uses Loguru for logging. To adjust its loglevel, use the environmen
 
 
 
-# how to start the project
+# how to start the project 
 
-1. step:    python -m venv ./venv   ( maybe you need the current version like python3 -m venv ./venv )
+1. step:    python -m venv ./venv   ( you have to start a virtual machine, maybe you need the current version like python3 -m venv ./venv )
 2. step:    source venv/bin/activate
 3. step:    pip install -r requirements.txt  (you can ignore the pip version)
 4. step:    sh ./run.sh
