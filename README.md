@@ -106,3 +106,15 @@ Authorization: Bearer ey...
 ## Log Level
 
 This package uses Loguru for logging. To adjust its loglevel, use the environment variable ``LOG_LEVEL``.
+
+
+
+# how to start the project
+
+1. step:    python -m venv ./venv   ( maybe you need the current version like python3 -m venv ./venv )
+2. step:    source venv/bin/activate
+3. step:    pip install -r requirements.txt  (you can ignore the pip version)
+4. step:    sh ./run.sh
+5. step:    copy the URL / klick on the URL
+6. step:    then add the following http://127.0.0.1:8000/login
+7. step:    you will have to type in your name and password and then you go!!! 
