@@ -14,25 +14,16 @@ template = """
                     <i class="fa fa-clipboard" aria-hidden="true"></i>
                     <script>
                     function copyText() {
-                    
-                        // Get the div element
-                        var divElement = document.getElementById("copyTarget");
-
-                        // Create a range object
-                        var range = document.createRange();
-
-                        // Select the contents of the div element
-                        range.selectNode(divElement);
-
-                        // Add the range to the user's selection
-                        window.getSelection().addRange(range);
-
-                        // Copy the selected text to the clipboard
-                        document.execCommand("copy");
-
-                        // Give a visual feedback to the user that the text has been copied
-                        alert("Token has been copied!");
+                        var copyText = document.getElementById("copyTarget");
                         
+                        // Select the text field
+                        copyText.select();
+                        copyText.setSelectionRange(0,99999);
+                        
+                        // Copy the text inside the text field
+                        navigator.clipboard.writeText(copyText.value);
+                        
+                        alert("Token has been copied!");
                     }
                     </script>
                 </span>"""
