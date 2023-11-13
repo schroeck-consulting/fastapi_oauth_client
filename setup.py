@@ -18,7 +18,7 @@ requirements = open("requirements.txt").read().split("\n")
 
 
 setup(
-    name="mvv.auth.fastapi",
+    name="sit-consulting.auth.fastapi",
     version=version,
     description="FastAPI Authorization Framework",
     long_description=io.open("README.md", encoding="utf8").read()+ "\n",
