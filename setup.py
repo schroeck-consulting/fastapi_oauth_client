@@ -18,7 +18,7 @@ requirements = open("requirements.txt").read().split("\n")
 
 
 setup(
-    name="sit-consulting.auth.fastapi",
+    name="fastapi_oauth_client",
     version=version,
     description="FastAPI Authorization Framework",
     long_description=io.open("README.md", encoding="utf8").read()+ "\n",
@@ -36,7 +36,7 @@ setup(
     url="http://pypi.python.org/projects/xxxx",
     license="GPL",
     packages=find_packages(exclude=["ez_setup"]),
-    namespace_packages=["mvv", "mvv.auth"],
+    namespace_packages=["fastapi_oauth_client"],
     include_package_data=True,
     zip_safe=False,
     tests_require=["pytest"],

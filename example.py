@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Depends
-from mvv.auth.fastapi import auth_router, verify_token
+from fastapi_oauth_client import verify_token, auth_router
 from starlette.middleware.sessions import SessionMiddleware
 import secrets
+
 
 app = FastAPI(
 
@@ -16,5 +17,5 @@ app.add_middleware(SessionMiddleware, secret_key=secrets.token_urlsafe(16))
 app.include_router(auth_router)
 
 @app.get("/protected_endpoint")
-def doSomething(profile= Depends(verify_token(roles=["admin"]))):
+def doSomething(profile=Depends(verify_token(roles=["admin"]))):
     return profile

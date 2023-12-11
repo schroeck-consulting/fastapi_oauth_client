@@ -1,7 +1,16 @@
+#  _____      _                         _      _____ _____
+# /  ___|    | |                       | |    |_   _|_   _|
+# \ `--.  ___| |__  _ __ ___   ___  ___| | __   | |   | |
+#  `--. \/ __| '_ \| '__/ _ \ / _ \/ __| |/ /   | |   | |
+# /\__/ / (__| | | | | | (_) |  __/ (__|   <   _| |_  | |
+# \____/ \___|_| |_|_|  \___/ \___|\___|_|\_\  \___/  \_/
+
+"""
+Tests for module settings
+"""
+
 import os
-from pathlib import Path
-import pytest
-from mvv.auth.fastapi.settings import OAuthSettings
+from fastapi_oauth_client.settings import OAuthSettings
 from unittest import mock
 
 
@@ -23,7 +32,7 @@ def test_settings_env():
     :return:
     """
     settings = OAuthSettings()
-    assert  settings.oauth_scope == "SCOPE"
+    assert settings.oauth_scope == "SCOPE"
     assert settings.oauth_jwks_uri == "URI"
     assert settings.oauth_token_endpoint == "/token"
     assert settings.oauth_authorization_endpoint == "/auth"
@@ -42,5 +51,5 @@ def test_settings_no_env():
     assert (settings.oauth_scope == settings.oauth_jwks_uri ==
             settings.oauth_token_endpoint ==
             settings.oauth_authorization_endpoint ==
-            settings.oauth_client_secret == settings.oauth_client_id == None)
+            settings.oauth_client_secret == settings.oauth_client_id is None)
 

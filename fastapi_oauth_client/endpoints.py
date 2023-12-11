@@ -60,7 +60,7 @@ class verify_token:
         profile = VerifyToken(token=token.credentials).verify(roles=self.roles)
         if not isinstance(profile, dict):
             raise HTTPException(401, {"status": "error",
-                "message": "Unexpected response from Token verification"})
+                  "message": "Unexpected response from Token verification"})
         if "status" in profile.keys() and profile.get("status") == "error":
             raise HTTPException(401, profile)
 
