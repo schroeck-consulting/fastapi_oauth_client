@@ -22,6 +22,7 @@ setup(
     version=version,
     description="FastAPI Authorization Framework",
     long_description=io.open("README.md", encoding="utf8").read()+ "\n",
+    long_description_content_type='text/markdown',
     #+ io.open(os.path.join("docs", "source", "HISTORY.rst"), encoding="utf8").read(),
     # Get more strings from
     # http://www.python.org/pypi?%3Aaction=list_classifiers
