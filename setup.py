@@ -36,7 +36,6 @@ setup(
     url="http://pypi.python.org/projects/xxxx",
     license="GPL",
     packages=find_packages(exclude=["ez_setup"]),
-    namespace_packages=["fastapi_oauth_client"],
     include_package_data=True,
     zip_safe=False,
     tests_require=["pytest"],
