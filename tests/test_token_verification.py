@@ -105,6 +105,53 @@ def test_get_signing_key(key_gen):
 
         assert key == key_gen.key
 
+def test_get_signing_key_exception_jwkClientError(key_gen):
+    """
+    Test get_signing_key operation: Make sure the VerifyToken class uses the
+    JWKSClient to obtain the RSA key
+    :param key_gen:
+    :return:
+    """
+    with mock.patch("fastapi_oauth_client.settings.OAuthSettings") as settings:
+        settings.side_effect = FakeSettings
+
+        token_verifier = VerifyToken(token="124")
+        token_verifier.jwks_client = MagicMock()
+
+        # Create mock method jwks_client.get_signing_key_from_jwt and return
+        # KeyGenerator mock object
+
+
+        token_verifier.jwks_client.get_signing_key_from_jwt.side_effect = [jwt.exceptions.PyJWKClientError("TEST")]
+
+        result = token_verifier.get_signing_key()
+        assert result == {"status": "error", "msg": "TEST"}
+        key = token_verifier.signing_key
+
+        assert key is None
+
+def test_get_signing_key_exception_decodeError(key_gen):
+    """
+    Test get_signing_key operation: Make sure the VerifyToken class uses the
+    JWKSClient to obtain the RSA key
+    :param key_gen:
+    :return:
+    """
+    with mock.patch("fastapi_oauth_client.settings.OAuthSettings") as settings:
+        settings.side_effect = FakeSettings
+
+        token_verifier = VerifyToken(token="124")
+        token_verifier.jwks_client = MagicMock()
+
+        # Create mock method jwks_client.get_signing_key_from_jwt and return
+        # KeyGenerator mock object
+        token_verifier.jwks_client.get_signing_key_from_jwt.side_effect = [jwt.exceptions.DecodeError("TEST_DecodeError")]
+
+        result = token_verifier.get_signing_key()
+        assert result == {"status": "error", "msg": "TEST_DecodeError"}
+        key = token_verifier.signing_key
+
+        assert key is None
 
 def test_decode(key_gen, token, payload):
     """
@@ -173,5 +220,77 @@ def test_verify_roles_no_roles_required(token):
     token_verifier = VerifyToken(token=token)
     result = token_verifier.verify_roles(roles, user_roles)
     assert result is True
+
+
+def test_verify():
+    """
+    Tests for verify function
+    """
+    # User permitteed
+    roles = ["admin", "tester"]
+
+    token_verifier = VerifyToken(token="124")
+    token_verifier.get_signing_key = MagicMock()
+    token_verifier.decode_token = MagicMock()
+    token_verifier.get_signing_key.side_effect = [None]
+    token_verifier.decode_token.side_effect = [{"roles": ["tester"]}]
+
+    payload = token_verifier.verify(roles=roles)
+
+    assert payload == {"roles": ["tester"]}
+
+    # Without role checks --> roles is empty
+    roles = None
+
+    token_verifier = VerifyToken(token="124")
+    token_verifier.get_signing_key = MagicMock()
+    token_verifier.decode_token = MagicMock()
+    token_verifier.get_signing_key.side_effect = [None]
+    token_verifier.decode_token.side_effect = [{"roles": ["tester"]}]
+
+    payload = token_verifier.verify(roles=roles)
+
+    assert payload == {"roles": ["tester"]}
+
+    # get_signing_key returns error
+    roles = None
+
+    token_verifier = VerifyToken(token="124")
+    token_verifier.get_signing_key = MagicMock()
+    token_verifier.decode_token = MagicMock()
+    token_verifier.get_signing_key.side_effect = [{"status": "error"}]
+    token_verifier.decode_token.side_effect = [{"roles": ["tester"]}]
+
+    payload = token_verifier.verify(roles=roles)
+
+    assert payload == {"status": "error"}
+
+    # User does not have correct role assignment
+    roles = ["admin", "tester"]
+
+    token_verifier = VerifyToken(token="124")
+    token_verifier.get_signing_key = MagicMock()
+    token_verifier.decode_token = MagicMock()
+    token_verifier.get_signing_key.side_effect = [None]
+    token_verifier.decode_token.side_effect = [{"roles": ["notpermitted"]}]
+
+    payload = token_verifier.verify(roles=roles)
+
+    assert payload == {"status": "error", "message": "You are not authorized "
+                                                  "to access this endpoint"}
+
+    # InvalidTokenError Exception
+    roles = ["admin", "tester"]
+
+    token_verifier = VerifyToken(token="124")
+    token_verifier.get_signing_key = MagicMock()
+    token_verifier.decode_token = MagicMock()
+    token_verifier.get_signing_key.side_effect = [None]
+    token_verifier.decode_token.side_effect = [jwt.exceptions.InvalidTokenError("TestError")]
+
+    payload = token_verifier.verify(roles=roles)
+
+    assert payload == {"status": "error", "message": "TestError"}
+
 
 
